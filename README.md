@@ -18,3 +18,5 @@ assistant:
     - Prefer one summary log per major step or loop, not per iteration unless necessary.
     - Use emojis sparingly for clarity, not decoration.
     - Keep log messages short but informative (e.g. “Fetching events...” instead of verbose details).
+
+Everything should work out of the box after creating a .env file containing API credentials
