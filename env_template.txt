@@ -1,9 +1,0 @@
-# Kalshi API Credentials Configuration
-# Rename this file to .env or set these as environment variables
-# Get your credentials from: https://kalshi.com/account/profile
-
-# Your Kalshi API Key ID
-KALSHI_API_KEY_ID=your_access_key_id_here
-
-# Path to your RSA private key file (save your private key to a .pem file)
-KALSHI_PRIVATE_KEY_PATH=./private_key.pem
