@@ -53,25 +53,8 @@ def main():
                         print(f"\t\t\tExpiration: {market.expiration_time}")
                         print(f"\t\t\tCan Close Early: {market.can_close_early}")
                         print(f"\t\t\tResult: {market.result}")
-                        print()
-        
-        # markets = cli.get_markets_for_event(event_ticker=EVENT)
-        # print(markets)
-        # orderbook = cli.get_orderbook(market_ticker=markets[0].ticker)
-        # print(orderbook)
-
-        '''
-        # Test connection
-        if mm.test_connection():
-            logger.info("🎉 Market maker initialized successfully!")
-            
-            # Get basic data
-            balance = mm.get_portfolio_balance()
-            markets = mm.get_markets(limit=5)  # Get more markets to find one with quotes
-            print("Markets:", markets)
-        else:
-            logger.error("❌ Failed to connect to Kalshi API")
-        '''
+                        orderbook = cli.get_orderbook(market_ticker=market.ticker)
+                        print(f"\t\t\tOrderbook: {orderbook}")
             
     except Exception as e:
         logger.error(f"❌ Error initializing market maker: {e}")
