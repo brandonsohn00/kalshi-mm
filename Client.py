@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from kalshi_python import KalshiClient, Configuration
 from kalshi_python.api.portfolio_api import PortfolioApi
 from kalshi_python.api.markets_api import MarketsApi
-from kalshi_types import Event, Series, EventStatus
+from kalshi_types import Event, Series, EventStatus, Announcement, ExchangeSchedule, ExchangeStatus
 
 logging.basicConfig(
     level=logging.INFO,
@@ -79,6 +79,36 @@ class Client:
                 raise
         except Exception as e:
             logger.error(f"Failed to fetch markets for {event.event_ticker}: {e}")
+            return None
+
+    def get_exchange_announcements(self) -> list[Announcement]:
+        """Get exchange announcements"""
+        try:
+            announcements_response = self.client.get_exchange_announcements()
+            announcements = announcements_response.announcements or []
+            return announcements
+        except Exception as e:
+            logger.error(f"Failed to fetch announcements: {e}")
+            return []
+
+    def get_exchange_schedule(self) -> Optional[ExchangeSchedule]:
+        """Get exchange schedule"""
+        try:
+            schedule_response = self.client.get_exchange_schedule()
+            schedule = schedule_response.schedule
+            return schedule
+        except Exception as e:
+            logger.error(f"Failed to fetch schedule: {e}")
+            return None
+
+    def get_exchange_status(self) -> Optional[ExchangeStatus]:
+        """Get exchange status"""
+        try:
+            status_response = self.client.get_exchange_status()
+            status = status_response
+            return status
+        except Exception as e:
+            logger.error(f"Failed to fetch status: {e}")
             return None
 
     def get_orderbook(self, market_ticker: str) -> Optional[dict]:

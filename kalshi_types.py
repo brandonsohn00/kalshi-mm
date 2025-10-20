@@ -64,6 +64,46 @@ class Series:
     title: Optional[str] = None
 
 @dataclass
+class Announcement:
+    delivery_time: Optional[datetime] = None
+    message: Optional[str] = None
+    status: Optional[str] = None
+    type: Optional[str] = None
+
+@dataclass
+class MaintenanceWindow:
+    end_datetime: Optional[datetime] = None
+    start_datetime: Optional[datetime] = None
+
+@dataclass
+class DayHours:
+    close_time: Optional[str] = None
+    open_time: Optional[str] = None
+
+@dataclass
+class StandardHours:
+    end_time: Optional[datetime] = None
+    start_time: Optional[datetime] = None
+    friday: Optional[List[DayHours]] = None
+    monday: Optional[List[DayHours]] = None
+    saturday: Optional[List[DayHours]] = None
+    sunday: Optional[List[DayHours]] = None
+    thursday: Optional[List[DayHours]] = None
+    tuesday: Optional[List[DayHours]] = None
+    wednesday: Optional[List[DayHours]] = None
+
+@dataclass
+class ExchangeSchedule:
+    maintenance_windows: Optional[List[MaintenanceWindow]] = None
+    standard_hours: Optional[List[StandardHours]] = None
+
+@dataclass
+class ExchangeStatus:
+    exchange_active: Optional[bool] = None
+    exchange_estimated_resume_time: Optional[Any] = None
+    trading_active: Optional[bool] = None
+
+@dataclass
 class GetEventsResponse:
     events: Optional[List[Event]] = None
     cursor: Optional[str] = None
