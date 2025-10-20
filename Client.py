@@ -43,7 +43,6 @@ class Client:
             events_response = self.client.get_events(**kwargs)
             events = events_response.events or []
             cursor = events_response.cursor
-            logger.info(f"Fetched {len(events)} events")
             return events, cursor
         except Exception as e:
             logger.error(f"Failed to fetch events: {e}")
