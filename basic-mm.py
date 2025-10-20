@@ -62,6 +62,12 @@ def main():
     check_exchange_status(cli)
     
     series: list[Series] = cli.get_series()
+    
+    # Get portfolio balance
+    balance = cli.get_portfolio_balance()
+    if balance is not None:
+        print(f"Portfolio Balance: ${balance:.2f}")
+    
 
     for i, s in enumerate(series[:1000]):
         events, cursor = cli.get_events(status = 'open', limit = 200, series_ticker = s.ticker, with_nested_markets = True)
@@ -80,9 +86,27 @@ def main():
                     print(f"\t\t\tClose Time: {market.close_time}")
                     print(f"\t\t\tExpiration: {market.expiration_time}")
                     print(f"\t\t\tCan Close Early: {market.can_close_early}")
+                    print(f"\t\t\tMarket Cap: {market.cap_count}")
                     print(f"\t\t\tResult: {market.result}")
                     orderbook = cli.get_orderbook(market_ticker=market.ticker)
-                    print(f"\t\t\tOrderbook: {orderbook}")
+                    yes_dollars = orderbook.get('orderbook', {}).get('yes_dollars', []) if orderbook else []
+                    no_dollars = orderbook.get('orderbook', {}).get('no_dollars', []) if orderbook else []
+                    
+                    # Ensure we have lists
+                    yes_dollars = yes_dollars or []
+                    no_dollars = no_dollars or []
+                    
+                    print(f"\t\t\tProbability (%)  Amount ($)")
+                    print(f"\t\t\t---------------  ----------")
+                    for no_dollar in no_dollars[-5:]:
+                        offer_price, offer_size = no_dollar
+                        converted_price = int(float(1 - float(offer_price)) * 100)
+                        print(f"\t\t\t{converted_price:<15} {offer_size}")
+                    print(f"\t\t\t-------------------------------")
+                    for yes_dollar in reversed(yes_dollars[:5]):
+                        bid_price, bid_size = yes_dollar
+                        converted_price = int(float(bid_price) * 100)
+                        print(f"\t\t\t{converted_price:<15} {bid_size}")
 
 
 

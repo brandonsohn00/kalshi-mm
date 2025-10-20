@@ -31,7 +31,6 @@ class Client:
         try:
             balance_response = self.client.get_balance()
             balance = balance_response.balance / 100  # Convert from cents to dollars
-            logger.info(f"💰 Portfolio balance: ${balance:.2f}")
             return balance
         except Exception as e:
             logger.error(f"❌ Failed to fetch portfolio balance: {e}")
